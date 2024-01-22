@@ -8,4 +8,13 @@ m[9:11]
 m[m<80]
 
 table(m>100)
-read.csv("A1_College.csv")
+college <- read.csv("A1_College.csv")
+
+sd(college$Apps)
+sd(college$Enroll)
+mean(college$Apps)
+mean(college$Enroll)
+table(college[college$Private=="No"])
+
+
+
