@@ -14,7 +14,14 @@ sd(college$Apps)
 sd(college$Enroll)
 mean(college$Apps)
 mean(college$Enroll)
-table(college[college$Private=="No"])
+table(college$Private)
+percent = (212/777) * 100
 
+boxplot(college$Outstate)
 
+boxplot(college$Outstate ~ college$Private)
+
+hist(college$Outstate, xlab="Tution Cost", ylab="# of Schools", main="Colleges' Out of state Tuition Cost")
+
+plot(college$Apps, college$Accept, xlab="Number of Applications", ylab="Number Accepted")
 
