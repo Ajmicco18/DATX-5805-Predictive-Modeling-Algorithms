@@ -13,7 +13,7 @@ logit.m = glm(HeartDisease ~ Age + Gender + ChestPainType + RestingBP +FastingBS
               data=train,family="binomial")
 summary(logit.m)
 
-predict(logit.m, newdata = data.frame(Age=55, Gender="M", ChestPainType="ATA",RestingBP=130,FastingBS = 121),type = "response")
+prob <- predict(logit.m, newdata = data.frame(Age=55, Gender="M", ChestPainType="ATA",RestingBP=130,FastingBS = 121),type = "response")
 
 pred_prob.test = predict(logit.m,newdata=test,type="response")
 predicted.test =rep(0,nrow(test))
