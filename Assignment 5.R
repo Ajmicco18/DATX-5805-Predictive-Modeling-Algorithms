@@ -5,7 +5,7 @@ library("leaps")
 fit.bestsub = regsubsets(Apps ~., data=College)
 summary(fit.bestsub)
 
-n.var = 12
+n.var = 17
 fit.bestsub = regsubsets(Apps ~.,data=College,nvmax=n.var)
 summary(fit.bestsub)
 
@@ -26,8 +26,8 @@ bestsubSummary$adjr2
 plot(bestsubSummary$adjr2, xlab="Number of variables",
      ylab="Adjusted R Squared", type="l")
 which.max(bestsubSummary$adjr2)
-points(12, bestsubSummary$adjr2[12], col="red", cex=1,pch=19)
-coef(fit.bestsub, 12)
+points(13, bestsubSummary$adjr2[13], col="red", cex=1,pch=19)
+coef(fit.bestsub, 13)
 
 #forward step wise selection
 fwd.bestsub = regsubsets(Apps ~.,data=College,nvmax=n.var,
@@ -48,8 +48,28 @@ fwdbestsub$adjr2
 plot(fwdbestsub$adjr2,xlab="Number of variables",
      ylab="Adjusted R Sqaured", type="l")
 which.max(fwdbestsub$adjr2)
-points(12,fwdbestsub$adjr2[12],col="red",cex=1,pch=19)
-coef(fwd.bestsub, 12)
+points(13,fwdbestsub$adjr2[13],col="red",cex=1,pch=19)
+coef(fwd.bestsub, 13)
 
 #Lasso regression
 library("glmnet")
+library("plotmo")
+
+X = model.matrix(Apps~.,College)[,-1]
+
+Y = College$Apps
+
+fit.lasso = glmnet(X,Y,alpha=1)
+
+plot(fit.lasso,xvar="lambda")
+
+plot_glmnet(fit.lasso,xvar="lambda",label=5)
+
+set.seed(123)
+cv.lambda.l = cv.glmnet(X,Y, alpha=1)
+
+plot(cv.lambda.l)
+
+lmin.l = cv.lambda.l$lambda.min
+
+coef(cv.lambda.l, s=lmin.l)
