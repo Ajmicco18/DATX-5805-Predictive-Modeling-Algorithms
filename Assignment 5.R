@@ -29,5 +29,27 @@ which.max(bestsubSummary$adjr2)
 points(12, bestsubSummary$adjr2[12], col="red", cex=1,pch=19)
 coef(fit.bestsub, 12)
 
-#forward stepwise selection
+#forward step wise selection
+fwd.bestsub = regsubsets(Apps ~.,data=College,nvmax=n.var,
+                      method="forward")
+summary(fwd.bestsub)
+fwdbestsub = summary(fwd.bestsub)
 
+#BIC best fit
+fwdbestsub$bic
+plot(fwdbestsub$bic,xlab="Number of variables",
+     ylab="BIC", type="l")
+which.min(fwdbestsub$bic)
+points(10,fwdbestsub$bic[10],col="red",cex=1,pch=19)
+coef(fwd.bestsub, 10)
+
+#adjusted R squared best fit
+fwdbestsub$adjr2
+plot(fwdbestsub$adjr2,xlab="Number of variables",
+     ylab="Adjusted R Sqaured", type="l")
+which.max(fwdbestsub$adjr2)
+points(12,fwdbestsub$adjr2[12],col="red",cex=1,pch=19)
+coef(fwd.bestsub, 12)
+
+#Lasso regression
+library("glmnet")
