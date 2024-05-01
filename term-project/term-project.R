@@ -8,12 +8,10 @@ ind = sample(1:n, size = smp_size)
 train.NBA = nba[ind, ]  # training data 
 test.NBA = nba[-ind, ]  # test data
 
+cleanTrain.NBA = na.omit(train.NBA)
+cleanTest.NBA = na.omit(test.NBA)
+
 #fitting logistic model
 library("nnet")
-logit.nba <- multinom(all_nba ~ g + gs + mp_per_game + fg_percent+
-                       x3p_percent + x2p_percent + ft_percent +
-                        trb_per_game + ast_per_game + stl_per_game +
-                        blk_per_game + tov_per_game + pts_per_game,
-                      data = train.NBA)
-
+logit.nba <- multinom(all_nba ~ .,data = train.NBA)
 summary(logit.nba)
